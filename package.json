@@ -45,7 +45,14 @@
     "bundler:dev": "cross-env NODE_ENV=development nodemon -- scripts/build.js",
     "bundler:prod": "cross-env NODE_ENV=production nodemon -- scripts/build.js",
     "prettier": "prettier --write **/*.js",
-    "seed": "node ./scripts/seed.js"
+    "seed": "node ./scripts/seed.js",
+    "db:clean": "sudo docker stop $(sudo docker ps -aq) && sudo docker rm $(sudo docker ps -aq)",
+    "db:init": "sudo docker run -d --name postgres -e POSTGRES_USER=notesadmin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=notesapi -p 5432:5432 -v \"$(pwd)\"/scripts/init_db.sh:/docker-entrypoint-initdb.d/init_db.sh -v db:/var/lib/postgresql/data postgres:13",
+    "db:seed": "npm run seed",
+    "app:clean": "rm -rf node_modules",
+    "app:init": "npm i --legacy-peer-deps",
+    "dev:init": "npm run db:clean && npm run db:init && npm run db:seed && npm run app:clean && npm run app:init",
+    "dev": "echo \"make sure to run dev:init first \" && npm start"
   },
   "babel": {
     "presets": [
