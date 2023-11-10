@@ -77,6 +77,12 @@ async function seed() {
 
   await Promise.all(
     res.map(({rows}) => {
+      // shape of res from the pg insert query's "RETURNING *"
+      // [
+      //   { command: 'INSERT', rowCount: 1, rows: [ { id: 1, body: 'Note 1', ... } ], ... },
+      //   { command: 'INSERT', rowCount: 1, rows: [ { id: 2, body: 'Note 2', ... } ], ... },
+      //   ...
+      // ]
       const id = rows[0].id;
       const content = rows[0].body;
       const data = new Uint8Array(Buffer.from(content));
