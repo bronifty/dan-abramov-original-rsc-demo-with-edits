@@ -52,7 +52,8 @@
     "app:clean": "rm -rf node_modules",
     "app:init": "npm i --legacy-peer-deps",
     "dev:init": "npm run db:clean && npm run db:init && npm run db:seed && npm run app:clean && npm run app:init",
-    "dev": "echo \"make sure to run dev:init first \" && npm start"
+    "dev": "echo \"make sure to run dev:init first \" && npm start",
+    "clean": "npm run db:clean && npm run app:clean"
   },
   "babel": {
     "presets": [
